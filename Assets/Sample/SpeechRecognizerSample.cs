@@ -7,8 +7,9 @@ namespace SpeechRecognizerPlugin
 {
     public class SpeechRecognizerSample : MonoBehaviour
     {
-        [SerializeField] Text resultText = null;
-        [SerializeField] Text buttonLabel = null;
+        [SerializeField] Text resultText;
+        [SerializeField] Text buttonLabel;
+        [SerializeField] GameObject loading;
         [SerializeField] string locale = "en-US";
 
         string result = null;
@@ -33,11 +34,8 @@ namespace SpeechRecognizerPlugin
 
         void Update()
         {
-            if (!string.IsNullOrEmpty(result))
-            {
-                resultText.text = result;
-                result = null;
-            }
+            if (SpeechRecognizer.IsRunning)
+                loading.transform.Rotate(Vector3.forward, 1f);
         }
 
         public void OnClickStartButton()
@@ -48,6 +46,12 @@ namespace SpeechRecognizerPlugin
             {
                 SpeechRecognizer.Stop();
                 buttonLabel.text = "Start";
+
+                if (!string.IsNullOrEmpty(result))
+                {
+                    resultText.text = result;
+                    result = null;
+                }
             }
             else
             {
