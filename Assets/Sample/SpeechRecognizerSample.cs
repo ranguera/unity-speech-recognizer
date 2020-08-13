@@ -11,6 +11,7 @@ namespace SpeechRecognizerPlugin
         [SerializeField] Text buttonLabel;
         [SerializeField] GameObject loading;
         [SerializeField] string locale = "en-US";
+        [SerializeField] Button recordButton;
 
         string result = null;
 
@@ -45,7 +46,8 @@ namespace SpeechRecognizerPlugin
             if (SpeechRecognizer.IsRunning)
             {
                 SpeechRecognizer.Stop();
-                buttonLabel.text = "Start";
+                buttonLabel.text = "Start Recording";
+                recordButton.image.color = new Color(.5f, 1f, .5f);
 
                 if (!string.IsNullOrEmpty(result))
                 {
@@ -56,7 +58,8 @@ namespace SpeechRecognizerPlugin
             else
             {
                 SpeechRecognizer.Start();
-                buttonLabel.text = "Stop";
+                buttonLabel.text = "Stop Recording";
+                recordButton.image.color = new Color(1f, .5f, .5f);
             }
         }
 
